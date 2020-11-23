@@ -6,10 +6,10 @@ import br.com.amorim.crypto.keys.RSAKey
 import javax.crypto.Cipher
 
 class RSACrypto(
-    private val context: Context
+    context: Context
 ) {
     private val rsaKey = RSAKey(context).apply {
-        generateRSAKeys()
+        initAndGenerateKeyPair()
     }
 
     fun encrypt(value: String): String {

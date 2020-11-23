@@ -1,7 +1,8 @@
+@file:Suppress("DEPRECATION")
+
 package br.com.amorim.crypto.keys
 
 import android.content.Context
-import android.os.Build
 import android.security.KeyPairGeneratorSpec
 import android.security.KeyPairGeneratorSpec.Builder
 import android.security.keystore.KeyGenParameterSpec
@@ -25,7 +26,7 @@ class RSAKey(
         }
     }
 
-    fun generateRSAKeys() {
+    fun initAndGenerateKeyPair() {
         val spec =
             Builder(context).run {
                 setKeySize(RSA_KEY_SIZE)
@@ -44,21 +45,6 @@ class RSAKey(
             initialize(spec)
             generateKeyPair()
         }
-    }
-
-    private fun createRsaKeyPair(): KeyPair {
-        val keyPairGenerator = KeyPairGenerator.getInstance(RSA_ENCRYPT_MODE, ANDROID_KEY_STORE)
-        val start = Calendar.getInstance()
-        val end = Calendar.getInstance()
-        end.add(Calendar.YEAR, 30)
-        val builder = KeyPairGeneratorSpec.Builder(context)
-            .setAlias(ALIAS)
-            .setSubject(X500Principal("CN=$ALIAS"))
-            .setSerialNumber(BigInteger.TEN)
-            .setStartDate(start.time)
-            .setEndDate(end.time)
-        keyPairGenerator.initialize(builder.build())
-        return keyPairGenerator.generateKeyPair()
     }
 
     fun getPrivateKey(): PrivateKey? {
